@@ -16,7 +16,9 @@ class Search extends React.Component {
         height: '100vw',
         width: '100vw',
         justifyContent: 'center',
-        background: '#eeeeee'
+        background: '#eeeeee',
+        left:0,
+        zIndex:100
       },
       fullWidth: {
         flex: '0 0 100%',

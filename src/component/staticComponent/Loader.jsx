@@ -1,5 +1,5 @@
 import React from 'react';
-import LoaderGif from './filters/LoaderSvg';
+import LoaderGif from './LoaderSvg';
 
 export default function Loader () {
     const style = {
