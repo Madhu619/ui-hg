@@ -10,7 +10,7 @@ class Search extends React.Component {
   render(){
     const styles={
       container: {
-        position: 'absolute',
+        position: 'fixed',
         marginTop: '70px',
         display: 'flex',
         height: '100vw',
@@ -18,7 +18,7 @@ class Search extends React.Component {
         justifyContent: 'center',
         background: '#eeeeee',
         left:0,
-        zIndex:100
+        zIndex:1
       },
       fullWidth: {
         flex: '0 0 100%',

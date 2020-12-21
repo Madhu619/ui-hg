@@ -16,6 +16,7 @@ class App extends React.Component {
          data: [],
          isLoaded : false,
          url: 'https://staging.healthandglow.com/api/catalog/product/v6/search/999?app=web&version=3.0.2&tag=loreal-paris&page=0:20',
+         filtersList:[]
       }
    };
   
@@ -41,15 +42,29 @@ class App extends React.Component {
     }.bind(this));
   }
 
-  onApplyFilter = (filterOptions, category) => {
-    debugger
-    let previousLaunchValue = new URL(this.state.url);
-      previousLaunchValue.searchParams.set('filters-'+category.toLowerCase(), filterOptions.text.toLowerCase());
-      this.setState({ isLoaded: false, url: previousLaunchValue});
+  onApplyFilter = (filterOptions, category, flag) => {
+    let filterVal = '';
+    if (flag === false) {
+      this.setState({filtersList:[]})
+      flag = true;
+    }
+    if (this.state.filtersList.length === 0 && !flag ){
+      this.state.filtersList.push({key: category.toLowerCase(), value:filterOptions.text.toLowerCase()});
+    }
+    if (category !== '' && this.state.filtersList.find((ele) => ele.value === filterOptions.text.toLowerCase()) === undefined) {
+      this.state.filtersList.push({key: category.toLowerCase(), value:filterOptions.text.toLowerCase()});
+    }
+    if (flag) {
+      let previousLaunchValue = new URL(this.state.url);
+      if (this.state.filtersList.length > 0) {
+        this.state.filtersList.forEach((ele) => filterVal += '&filters-'+ele.key+'='+ele.value);
+        previousLaunchValue += filterVal;
+      }
 
-    $.get(previousLaunchValue , function(result) {
-      this.onDataReceived(result);
-    }.bind(this));
+      $.get(previousLaunchValue , function(result) {
+        this.onDataReceived(result);
+      }.bind(this));
+    }
   }
 
 

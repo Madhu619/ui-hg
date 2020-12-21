@@ -27,8 +27,8 @@ export default function FilterButtons ({data, onApplySort, onApplyFilter}) {
     setSort(!sort);
     if (data !== undefined) {
       let text = data.text.toLowerCase()
-      if ((data.key === 'price' && text === 'High - Low')){
-        onApplySort(data.key.toLowerCase()+':asc')
+      if (data.key === 'price' ){
+        text === 'High - Low' ? onApplySort(data.key.toLowerCase()+':asc') : onApplySort(data.key.toLowerCase()+':desc');
       } else if (text === 'popularity' ){
         onApplySort(text+':asc')
       } else {
@@ -36,9 +36,11 @@ export default function FilterButtons ({data, onApplySort, onApplyFilter}) {
       }
     }
   }
-  function filterOptionClick (data, category) {
+  function filterOptionClick (data, category,flag) {
     if (data !== undefined) {
-      onApplyFilter(data,category);
+      if (flag) setFilter(!filter);
+      onApplyFilter(data,category,flag);
+      return
     }
     setFilter(!filter);
   }

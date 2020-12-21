@@ -90,9 +90,14 @@ const useStyles = makeStyles((theme) => ({
     height: '16px',
     marginRight: '6px',
     display: 'inline-block',
+  },
+  applyBtn: {
+    width: '100%',
+    background: '#ffa253',
+    padding: '10px',
+    border: 'navajowhite',
+    color: 'white'
   }
-  
-
 }));
 
 
@@ -100,20 +105,23 @@ const useStyles = makeStyles((theme) => ({
 const FilterOptions = ({ onClick , data, onApplyFilter}) => {
   const [bucket, setBucket] = useState(data[0]);
   const classes = useStyles();
+  let filterList = [];
   const [filters, setFilters] = useState('');
   let filter = [];
+  
   const getRightMenu = (data) => {
     setBucket(data);
   }
+
 
   return (
     <div className={classes.filterOptions}>
       <div className={classes.header}>
         <div>
-          <FontAwesomeIcon icon={faTimes} size='lg' onClick={onClick} />
+          <FontAwesomeIcon icon={faTimes} size='lg' onClick={()=> onClick()} />
         </div>
         <div> <strong>Filter By</strong></div>
-        <div className={classes.clearAll}>Clear All</div>
+        <div className={classes.clearAll} onClick={() => onClick('','',false)}>Clear All</div>
       </div>
       <div className={classes.filterSection}>
         <div className={classes.leftSideFilter}>
@@ -123,10 +131,11 @@ const FilterOptions = ({ onClick , data, onApplyFilter}) => {
         </div>
         <div className={classes.rightSideFilter}>
           <ul className={classes.filterList}>
-            {bucket.buckets.map((ele) =>  <li onClick={()=> onClick(ele, bucket.text)} className={classes.filters} > {ele.colorCode && <span className={classes[ele.text] +' '+  classes.spanElement}> </span>} {ele.text} { ele.showDocCount && `(`+ele.docCount +`)`} </li>)}
+            {bucket.buckets.map((ele) =>  <li onClick={()=> onClick(ele, bucket.text, '')} className={classes.filters} > {ele.colorCode && <span className={classes[ele.text] +' '+  classes.spanElement}> </span>} {ele.text} { ele.showDocCount && `(`+ele.docCount +`)`} </li>)}
           </ul>
         </div>
       </div>
+      <button className={classes.applyBtn} value='Apply' onClick={() => onClick('','',true)}>Apply</button>
     </div>
   );
 }
