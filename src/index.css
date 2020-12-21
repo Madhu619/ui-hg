@@ -108,3 +108,16 @@ code {
 .rating path, .wish-list path {
   fill : #ffa253
 }
+.pagination {
+  justify-content: center;
+  margin: 40px 0;
+}
+.pagination li {
+  margin: 0 10px;
+  background: #ffa253;
+  text-align: center;
+  color: white;
+  border-radius: 5px;
+  padding: 1px 20px;
+  cursor: pointer;
+}

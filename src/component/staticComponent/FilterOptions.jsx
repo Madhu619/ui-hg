@@ -50,7 +50,8 @@ const useStyles = makeStyles((theme) => ({
   },
   filters: {
     margin: '5px',
-    width: '100%'
+    width: '100%',
+    cursor: 'pointer'
   },
   shaded :{
 
@@ -126,7 +127,7 @@ const FilterOptions = ({ onClick , data, onApplyFilter}) => {
       <div className={classes.filterSection}>
         <div className={classes.leftSideFilter}>
           <ul class={classes.filterList}>
-            {data.map((ele) =>  <li onClick={()=> getRightMenu(ele)} className={classes.filters} > {ele.text}</li>)}
+            {data.map((ele) =>  <li onClick={()=> getRightMenu(ele)} className={classes.filters} > {ele.text} <span> </span></li>)}
           </ul>
         </div>
         <div className={classes.rightSideFilter}>

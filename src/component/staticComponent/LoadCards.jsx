@@ -2,6 +2,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
+//import { Pagination } from 'react-bootstrap';
 
 export default class LoadCards extends React.Component {
   constructor(props) {
@@ -9,11 +10,8 @@ export default class LoadCards extends React.Component {
   }
   render() {
      return(
-      this.props.data.map((ele, i) => {
-        return  <Cards  card={ele} lineFlag={i % 2 === 0 ? true : false}/>
-      }
+        <Pagination data={this.props.data}/>
       )
-     )
   }
 }
 class Cards extends React.Component {
@@ -44,3 +42,66 @@ class Cards extends React.Component {
     )
   }
 }
+
+//Pagination Starts
+
+
+class Pagination extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      todos: this.props.data,
+      currentPage: 1,
+      todosPerPage: 10
+    };
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(event) {
+    this.setState({
+      currentPage: Number(event.target.id)
+    });
+  }
+
+  render() {
+    const { todos, currentPage, todosPerPage } = this.state;
+
+    // Logic for displaying current todos
+    const indexOfLastTodo = currentPage * todosPerPage;
+    const indexOfFirstTodo = indexOfLastTodo - todosPerPage;
+    const currentTodos = todos.slice(indexOfFirstTodo, indexOfLastTodo);
+
+    const renderTodos = currentTodos.map((ele, i) => 
+      <Cards  card={ele} lineFlag={i % 2 === 0 ? true : false}/>
+    );
+
+    // Logic for displaying page numbers
+    const pageNumbers = [];
+    for (let i = 1; i <= Math.ceil(todos.length / todosPerPage); i++) {
+      pageNumbers.push(i);
+    }
+
+    const renderPageNumbers = pageNumbers.map(number => {
+      return (
+        <li
+          key={number}
+          id={number}
+          onClick={this.handleClick}
+        >
+          {number}
+        </li>
+      );
+    });
+
+    return (
+      <>
+        {renderTodos}
+        <div className='row pagination' id="page-numbers">
+          {renderPageNumbers}
+        </div>
+      </>
+    );
+  }
+}
+//Pagination Ends
